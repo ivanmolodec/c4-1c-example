@@ -30,6 +30,8 @@
 
 Пример диаграммы контейнеров (подсистем) сгенерированной Structurizr
 
+![image](docs/img/structurizrContainer.png)
+
 [Описание кода L2](docs/L2Container.md)
 
 ### L3 - Component - Объекты конфигурации
@@ -38,6 +40,7 @@
 
 Пример диаграммы компонентов (объектов) сгенерированной Structurizr
 
+![image](docs/img/structurizrComponent.png)
 
 [Описание кода L3](docs/L3Component.md)
 
@@ -45,7 +48,8 @@
 
 Не используется, но можно на этом уровне сделать принципиальное описание структуры общих модулей или ER-диаграммы объектов из слоя компонентов.
 
-Пример ER-диаграммы сгенерированной PUML
-
-
 [Описание кода L4](docs/L4Code.md)
+
+## Заимствования
+
+[1ce-icons-for-plantuml](https://github.com/ovcharenko-di/1ce-icons-for-plantuml)
