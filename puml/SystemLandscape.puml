@@ -2,7 +2,7 @@
 
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
-LAYOUT_WITH_LEGEND()
+LAYOUT_LANDSCAPE()
 
 Enterprise_Boundary(c0, "Системный ландшафт предприятия") {
     Person(SystemUser1, "Пользователь-исполнитель")
@@ -15,12 +15,14 @@ Enterprise_Boundary(c0, "Системный ландшафт предприят�
     System(OtherSystem3, "Внешняя система 3")
 }
 
-Rel(OtherSystemUser, OtherSystem1, "Вводит данные")
-Rel(OtherSystemAdmin, OtherSystem3, "Администрирует ПО")
+Rel_U(OtherSystemUser, OtherSystem1, "Вводит данные")
+Rel_D(OtherSystemAdmin, OtherSystem3, "Администрирует ПО")
 Rel(OtherSystem1, System1C, "Передача данных по НСИ", "AMQP")
 Rel(System1C, OtherSystem2, "Передача остатков по складам", "HTTPS")
 Rel(OtherSystem2, OtherSystem3, "Собирает данные для BI", "TCP")
-Rel(SystemUser2, System1C, "Смотрит отчеты")
-Rel(SystemUser1, System1C, "Вводит данные")
+Rel_U(SystemUser2, System1C, "Смотрит отчеты")
+Rel_D(SystemUser1, System1C, "Вводит данные")
+
+SHOW_LEGEND()
 
 @enduml

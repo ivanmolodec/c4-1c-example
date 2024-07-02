@@ -1,0 +1,25 @@
+@startuml Example 1C C4 - Component
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_LANDSCAPE()
+
+Person(SystemUser1, "Пользователь-исполнитель")
+
+Container_Boundary(SubsysGoodsObjects, "Учет товаров") {
+  Component(Cat_Goods, "Товары", "Справочник")
+  Component(Doc_MovementsOfGoods, "Перемещение товаров", "Документ")
+  Component(Enum_GoodsType, "Виды товаров", "Перечисление")
+  Component(InfoReg_GoodsCosts, "Стоимость товаров", "Регистр сведений")
+  Component(AccumReg_RemainingGoods, "Остатки товаров", "Регистр накопления")
+}
+
+Rel_U(SystemUser1, Doc_MovementsOfGoods, "Вводит данные")
+Rel(Enum_GoodsType, Cat_Goods, "Определяет вид товара")
+Rel_D(InfoReg_GoodsCosts, Doc_MovementsOfGoods, "Определяет цену товара")
+Rel(Cat_Goods, Doc_MovementsOfGoods, "Ссылается на товар")
+Rel(Doc_MovementsOfGoods, AccumReg_RemainingGoods, "Записывает информацию по остаткам товаров")
+
+SHOW_LEGEND()
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml Example 1C C4 - Containers
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_LANDSCAPE()
+
+Person(SystemUser1, "Пользователь-исполнитель")
+Person(SystemUser2, "Пользователь-руководитель")
+
+System_Boundary(System1C, "Система на платформе 1С") {
+  Container(SubsysReporting, "Отчетность", "Подсистема")
+  Container(SubsysServiceObjects, "Сервисные объекты", "Подсистема")
+  Container(StandardSubsystemsLibrary, "Библиотека стандартных подсистем", "Набор подсистем")
+  Container(SubsysGoodsObjects, "Учет товаров", "Подсистема")
+}
+
+Rel(SystemUser2, SubsysReporting, "Смотрит отчеты")
+Rel(SubsysReporting, SubsysGoodsObjects, "Получает информацию для отчетности")
+Rel_D(SubsysServiceObjects, SubsysGoodsObjects, "Передает информацию по товарам для интеграции")
+Rel(SubsysGoodsObjects, StandardSubsystemsLibrary, "Использует стандартные подсистемы")
+Rel_U(SystemUser1, SubsysGoodsObjects, "Вводит данные")
+
+SHOW_LEGEND(true)
+
+@enduml
