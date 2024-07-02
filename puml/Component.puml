@@ -23,5 +23,3 @@ Rel(Doc_MovementsOfGoods, AccumReg_RemainingGoods, "Записывает инф�
 SHOW_LEGEND()
 
 @enduml
-
-
