@@ -18,3 +18,4 @@ Rel_U(SystemUser1, System1C, "Вводит данные")
 SHOW_LEGEND()
 
 @enduml
+
