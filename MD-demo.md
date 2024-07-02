@@ -1,6 +1,6 @@
 Here is plantuml snippet:
 
-```plantuml:puml/md-sample
+```plantuml:md-sample
 @startuml
 Bob -> Alice : hello
 @enduml
