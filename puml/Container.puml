@@ -23,3 +23,4 @@ Rel_U(SystemUser1, SubsysGoodsObjects, "Вводит данные")
 SHOW_LEGEND(true)
 
 @enduml
+
