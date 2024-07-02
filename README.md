@@ -25,7 +25,7 @@
 </details>
 <details><summary>Пример диаграммы системного контекста сгенерированной PlantUML</summary>
 
-![image](docs/img/pumlSystemContext.png)
+![image](out/SystemContext.svg)
 
 </details>
 <details><summary>Пример диаграммы системного ландшафта сгенерированной Structurizr</summary>
@@ -35,7 +35,7 @@
 </details>
 <details><summary>Пример диаграммы системного ландшафта сгенерированной PlantUML</summary>
 
-![image](docs/img/pumlSystemLandscape.png)
+![image](out/SystemLandscape.svg)
 
 </details>
 
@@ -51,7 +51,7 @@
 </details>
 <details><summary>Пример диаграммы контейнеров (подсистем) сгенерированной PlantUML</summary>
 
-![image](docs/img/pumlContainer.png)
+![image](out/Container.svg)
 
 </details>
 
@@ -67,7 +67,7 @@
 </details>
 <details><summary>Пример диаграммы компонентов (объектов) сгенерированной PlantUML</summary>
 
-![image](docs/img/pumlComponent.png)
+![image](out/Component.svg)
 
 </details>
 
