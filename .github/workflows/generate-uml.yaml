@@ -14,6 +14,6 @@ jobs:
       uses: kolchurinvv/generate-plantuml-action@master
       with:
         message: "Render PlantUML files"
-        server: http://www.plantuml.com/plantuml/svg 
+        server: http://www.plantuml.com/plantuml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
