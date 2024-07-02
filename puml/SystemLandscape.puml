@@ -1,0 +1,28 @@
+@startuml Example 1C C4 - System Landscape
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_LANDSCAPE()
+
+Enterprise_Boundary(c0, "Системный ландшафт предприятия") {
+    Person(SystemUser1, "Пользователь-исполнитель")
+    Person(SystemUser2, "Пользователь-руководитель")
+    Person(OtherSystemUser, "Пользователь внешней системы")
+    Person(OtherSystemAdmin, "Администратор внешней системы")
+    System(System1C, "Система на платформе 1С")
+    System(OtherSystem1, "Внешняя система 1")
+    System(OtherSystem2, "Внешняя система 2")
+    System(OtherSystem3, "Внешняя система 3")
+}
+
+Rel_U(OtherSystemUser, OtherSystem1, "Вводит данные")
+Rel_D(OtherSystemAdmin, OtherSystem3, "Администрирует ПО")
+Rel(OtherSystem1, System1C, "Передача данных по НСИ", "AMQP")
+Rel(System1C, OtherSystem2, "Передача остатков по складам", "HTTPS")
+Rel(OtherSystem2, OtherSystem3, "Собирает данные для BI", "TCP")
+Rel_U(SystemUser2, System1C, "Смотрит отчеты")
+Rel_D(SystemUser1, System1C, "Вводит данные")
+
+SHOW_LEGEND()
+
+@enduml

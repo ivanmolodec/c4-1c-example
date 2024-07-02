@@ -15,36 +15,60 @@
 ### L1 - System Context (System Landscape) - Интеграционный ландшафт
 
 Слой, на котором отображается как система взаимодействует с пользователями и другими внешними системами. По умолчанию в системный контекст входят только пользователи и системы, которые непосредственно взаимодействуют с основной системой. Если нам нужно видеть системы и пользователей, которые влияют на систему опосредованно, можно использовать вид System Landscape (Системный ландшафт), в котором будут отображены все системы, описанные в модели.
+[Описание кода L1](docs/L1SystemContext.md)
 
-Пример диаграммы системного контекста сгенерированной Structurizr
+<details><summary>Пример диаграммы системного контекста сгенерированной Structurizr</summary>
 
 ![image](docs/img/structurizrSystemContext.png)
 
-Пример диаграммы системного ландшафта сгенерированной Structurizr
+</details>
+<details><summary>Пример диаграммы системного контекста сгенерированной PlantUML</summary>
+
+![image](docs/img/pumlSystemContext.png)
+
+</details>
+<details><summary>Пример диаграммы системного ландшафта сгенерированной Structurizr</summary>
 
 ![image](docs/img/structurizrSystemLandscape.png)
 
-[Описание кода L1](docs/L1SystemContext.md)
+</details>
+<details><summary>Пример диаграммы системного ландшафта сгенерированной PlantUML</summary>
+
+![image](docs/img/pumlSystemLandscape.png)
+
+</details>
 
 ### L2 - Container - Подсистемы
 
 В рамках описания архитектуры системы на платформе 1С контейнерами предлагается считать подсистемы конфигурации. При наличии большого количества подсистем и отсутствия требований к описанию каждой подсистемы можно объединять их в блоки (например, все подсистемы БСП в одном контейнере).
+[Описание кода L2](docs/L2Container.md)
 
-Пример диаграммы контейнеров (подсистем) сгенерированной Structurizr
+<details><summary>Пример диаграммы контейнеров (подсистем) сгенерированной Structurizr</summary>
 
 ![image](docs/img/structurizrContainer.png)
 
-[Описание кода L2](docs/L2Container.md)
+</details>
+<details><summary>Пример диаграммы контейнеров (подсистем) сгенерированной PlantUML</summary>
+
+![image](docs/img/pumlContainer.png)
+
+</details>
 
 ### L3 - Component - Объекты конфигурации
 
 На слое компонентов детализируется состав объектов в подсистеме и описывается их взаимодействие. Компонентом является объект метаданных.
+[Описание кода L3](docs/L3Component.md)
 
-Пример диаграммы компонентов (объектов) сгенерированной Structurizr
+<details><summary>Пример диаграммы компонентов (объектов) сгенерированной Structurizr</summary>
 
 ![image](docs/img/structurizrComponent.png)
 
-[Описание кода L3](docs/L3Component.md)
+</details>
+<details><summary>Пример диаграммы компонентов (объектов) сгенерированной PlantUML</summary>
+
+![image](docs/img/pumlComponent.png)
+
+</details>
 
 ### L4 - Code - Код/Структуры данных
 
