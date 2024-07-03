@@ -1,6 +1,9 @@
 # Пример описания архитектуры системы 1С по модели C4
 
-[![License](https://img.shields.io/github/license/ivanmolodec/c4-1c-example?style=badge)](https://github.com/ivanmolodec/c4-1c-example/blob/develop/LICENSE)
+[![License](https://img.shields.io/github/license/ivanmolodec/c4-1c-example?style=badge)](https://github.com/ivanmolodec/c4-1c-example/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/ivanmolodec/c4-1c-example.svg?label=Github%20%E2%98%85&a)](https://github.com/ivanmolodec/c4-1c-example/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues-raw/ivanmolodec/c4-1c-example?style=badge)](https://github.com/ivanmolodec/c4-1c-example/issues)
+[![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.neocities.org/badges/4/810243719.json)](https://openyellow.notion.site/openyellow/24727888daa641af95514b46bee4d6f2?p=28092b301c0640c0aebaaee53846692c&amp;pm=s)
 
 ## Диаграммы как код
 
