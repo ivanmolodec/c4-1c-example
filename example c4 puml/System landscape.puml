@@ -1,0 +1,164 @@
+@startuml systemLandscape
+
+!include <C4/C4_Container>
+!include ./Styles common.puml
+
+<style>
+    rectangle {
+        MinimumWidth : 260
+    }
+</style>
+
+LAYOUT_LANDSCAPE()
+
+skinparam linetype ortho
+
+' Служебные процедуры и переменные
+!$ERPpresentation ?= "\n\n\n\n<font:monospaced>                                                                                             </font>1С: ERP УХ<font:monospaced>                                                                                             </font>\n\n\n\n"
+!$ESBpresentation ?= "\n\n\n\n<font:monospaced>                                                                                             </font>Шина данных<font:monospaced>                                                                                             </font>\n\n\n\n"
+!$LocalESBpresentation ?= "\n\n\n\n\n\n\n\n\n\n<font:monospaced></font>Локальная\nшина\nданных<font:monospaced></font>\n\n\n\n\n\n\n\n\n\n"
+
+' Системный ландшафт
+Enterprise_Boundary(c0, "Системный ландшафт предприятия") {
+    System1C(ERP, $ERPpresentation)
+    SystemESB(ESB, $ESBpresentation)
+    FileSystem(File, "Файловое\nхранилище", $sprite="fileSystem")
+
+    System1C(DocumentFlow           , "1С: Документооборот")
+    System1C(RestManagement         , "1С: Управление рестораном")
+    System1C(Cashbox                , "Касса")
+    System1C(UH                     , "1С: УХ")
+    System1C(IFRS                   , "1С: МСФО")
+    System1C(WMS                    , "1С: WMS")
+    System1C(MaintenanceAndRepair   , "1С: ТОиР")
+
+    System_Boundary(c1, "Удаленные филиалы") {
+      System1CSecondary(ERP1, "1С: ERP УХ филиал №1")
+      System1CSecondary(ERP2, "1С: ERP УХ филиал №2")
+      System1CSecondary(ERP3, "1С: ERP УХ филиал №3")
+      System1CSecondary(ERP4, "1С: ERP УХ филиал №4")
+      System1CSecondary(ERP5, "1С: ERP УХ филиал №5")
+
+      SystemESB(LocalESB, $LocalESBpresentation)
+
+      System1CSecondary(ZUP1, "1С: ЗУП филиал №1")
+      System1CSecondary(ZUP2, "1С: ЗУП филиал №2")
+      System1CSecondary(ZUP3, "1С: ЗУП филиал №3")
+    }
+
+    SystemSAP(SAPERP     , "SAP ERP")
+
+    System(SED           , "СЭД")
+    System(DCT           , "ТСД")
+    
+    System(MDM           , "MDM")
+    System(IDM           , "IDM")
+    System(Arhiv         , "Архив")
+}
+
+System_Ext(EDO              , "ЭДО")
+System_Ext(ConturExtern     , "Контур.Экстерн")
+System_Ext(ETP1             , "ЭТП №1")
+System_Ext(ETP2             , "ЭТП №2")
+System_Ext(ETP3             , "ЭТП №3")
+System_Ext(Mintrud          , "ИС Минтруда")
+System_Ext(HonestMark       , "Честный знак")
+System_Ext(TraceableProducts, "Единая база прослеживаемых товаров")
+System_Ext(Centrobank       , "Центробанк")
+System_Ext(FNS              , "ФНС")
+System_Ext(ATOL             , "АТОЛ-Онлайн")
+System_Ext(ETP4             , "ЭТП №4")
+System_Ext(ETP5             , "ЭТП №5")
+System_Ext(ETP6             , "ЭТП №6")
+System_Ext(ETP7             , "ЭТП №7")
+System_Ext(FGIS             , "ФГИС Меркурий")
+System_Ext(Rosfinmonitoring , "Росфинмониторинг")
+System_Ext(FTS              , "ФТС")
+System_Ext(ITS              , "Сайт its.1c")
+System_Ext(MosExchange      , "Московская Биржа")
+System_Ext(ETP8             , "ЭТП №8")
+ 
+' 1C
+BiRel_U(ESB, ERP, "AMQP")
+
+Rel_L(ERP, ITS, "HTTPS")
+BiRel_L(ERP, TraceableProducts, "HTTPS")
+BiRel_L(ERP, HonestMark, "HTTPS")
+Rel_R_Dashed(ERP, FNS, "", $sprite="schedule")
+
+BiRel_R_Dashed(ERP, File, "", $sprite="user")
+BiRel_R_Dashed(File, Mintrud, "", $sprite="user")
+Rel_R_Dashed(File, FTS, "", $sprite="user")
+
+BiRel_L(ESB, DocumentFlow, "")
+BiRel_L(ESB, RestManagement, "")
+BiRel_U(ESB, Cashbox, "")
+
+BiRel_L(ESB, UH, "")
+Rel_R(IFRS, ESB, "")
+
+BiRel_L(ESB, MaintenanceAndRepair, "")
+
+BiRel_U(ESB, c1, "AMQP")
+Lay_U(ERP, c1)
+Lay_R(ESB, ERP)
+
+BiRel_R(ERP1, LocalESB, "")
+BiRel_R(ERP2, LocalESB, "")
+BiRel_R(ERP3, LocalESB, "")
+BiRel_R(ERP4, LocalESB, "")
+BiRel_R(ERP5, LocalESB, "")
+
+BiRel_R(LocalESB, ZUP1, "")
+BiRel_R(LocalESB, ZUP2, "")
+BiRel_R(LocalESB, ZUP3, "")
+
+Rel_L(SED, ESB, "")
+
+BiRel_R(ESB, DCT, "")
+BiRel_R(ESB, Arhiv, "")
+BiRel_R(ESB, SAPERP, "")
+BiRel_R(ESB, WMS, "")
+
+BiRel_U(ESB, IDM, "")
+
+Rel_R(ESB, ConturExtern, "")
+Lay_R(ATOL, ConturExtern)
+BiRel_R(ESB, IDM, "")
+Lay_R(ATOL, IDM)
+BiRel_R(ESB, ETP5, "")
+Lay_R(ATOL, ETP5)
+Rel_R(ESB, ETP6, "")
+Lay_R(ATOL, ETP6)
+BiRel_R(ESB, Rosfinmonitoring, "")
+Lay_R(ATOL, Rosfinmonitoring)
+Rel_R(ESB, ETP7, "")
+Lay_R(ATOL, ETP7)
+
+BiRel_U(ESB, ETP1, "")
+Lay_L(ATOL, ETP1)
+BiRel_U(ESB, ETP2, "")
+Lay_L(ATOL, ETP2)
+BiRel_U(ESB, ETP3, "")
+Lay_L(ATOL, ETP3)
+BiRel_U(ESB, ATOL, "")
+Lay_L(ATOL, ATOL)
+BiRel_U(ESB, ETP4, "")
+Lay_L(ATOL, ETP4)
+
+BiRel_L(ESB, Centrobank, "")
+Lay_L(ATOL, Centrobank)
+BiRel_L(ESB, MDM, "")
+Lay_L(ATOL, MDM)
+BiRel_L(ESB, ETP8, "")
+Lay_L(ATOL, ETP8)
+BiRel_L(ESB, MosExchange, "")
+Lay_L(ATOL, MosExchange)
+Rel_L(ESB, FGIS, "")
+Lay_L(ATOL, FGIS)
+BiRel_L(ESB, EDO, "")
+Lay_L(ATOL, EDO)
+
+LAYOUT_WITH_LEGEND("Легенда", 1, 1, 1, 1, 1, 1)
+
+@enduml
