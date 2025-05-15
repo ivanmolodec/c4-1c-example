@@ -338,3 +338,11 @@ $getRel($right("-","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, 
 !unquoted procedure BiRel_R_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
 $getRel("<<..>>", $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
 !endprocedure
+
+!unquoted procedure Rel_U_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel($up("-","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure BiRel_U_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel($up("<<..","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure

@@ -1,7 +1,7 @@
 @startuml systemLandscape
 
 !include <C4/C4_Container>
-!include ./Styles common.puml
+!include ./StylesCommon.puml
 
 <style>
     rectangle {
@@ -84,11 +84,12 @@ BiRel_U(ESB, ERP, "AMQP")
 Rel_L(ERP, ITS, "HTTPS")
 BiRel_L(ERP, TraceableProducts, "HTTPS")
 BiRel_L(ERP, HonestMark, "HTTPS")
-Rel_R_Dashed(ERP, FNS, "", $sprite="schedule")
+Rel_U_Dashed(ERP, FNS, "", $sprite="schedule")
 
 BiRel_R_Dashed(ERP, File, "", $sprite="user")
-BiRel_R_Dashed(File, Mintrud, "", $sprite="user")
-Rel_R_Dashed(File, FTS, "", $sprite="user")
+Lay_R(File, c1)
+BiRel_U_Dashed(File, Mintrud, "", $sprite="user")
+Rel_U_Dashed(File, FTS, "", $sprite="user")
 
 BiRel_L(ESB, DocumentFlow, "")
 BiRel_L(ESB, RestManagement, "")
@@ -100,7 +101,6 @@ Rel_R(IFRS, ESB, "")
 BiRel_L(ESB, MaintenanceAndRepair, "")
 
 BiRel_U(ESB, c1, "AMQP")
-Lay_U(ERP, c1)
 Lay_R(ESB, ERP)
 
 BiRel_R(ERP1, LocalESB, "")
