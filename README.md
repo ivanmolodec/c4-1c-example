@@ -44,7 +44,7 @@
 
 <details><summary>Еще один пример диаграммы системного ландшафта сгенерированной PlantUML с детальным описанием</summary>
 
-[Посмотреть пример](example-system-landscape-c4-puml/ExampleSystemLandscape.md)
+[Посмотреть пример](puml/example-system-landscape-c4-puml/ExampleSystemLandscape.md)
 
 </details>
 
