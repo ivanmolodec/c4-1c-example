@@ -1,0 +1,348 @@
+' convert it with additional command line argument -DRELATIVE_INCLUDE="relative/absolute" to use locally
+!if %variable_exists("RELATIVE_INCLUDE")
+  !include ./C4.puml
+!else
+  !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!endif
+
+' Scope: A single software system.
+' Primary elements: The software system in scope.
+' Supporting elements: People and software systems directly connected to the software system in scope.
+' Intended audience: Everybody, both technical and non-technical people, inside and outside of the software development team.
+
+' Colors
+' ##################################
+!$DEFAULT_LABEL_LEGEND ?= "Legend"
+
+!$PERSON_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$PERSON_BG_COLOR ?= "#08427B"
+!$PERSON_BORDER_COLOR ?= "#073B6F"
+
+!$EXTERNAL_PERSON_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$EXTERNAL_PERSON_BG_COLOR ?= "#686868"
+!$EXTERNAL_PERSON_BORDER_COLOR ?= "#8A8A8A"
+
+!$SYSTEM_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$SYSTEM_BG_COLOR ?= "#1168BD"
+!$SYSTEM_BORDER_COLOR ?= "#3C7FC0"
+
+!$SYSTEM_BOUNDARY_COLOR ?= $BOUNDARY_COLOR
+!$SYSTEM_BOUNDARY_BG_COLOR ?= $BOUNDARY_BG_COLOR
+!$SYSTEM_BOUNDARY_BORDER_STYLE ?= $BOUNDARY_BORDER_STYLE
+
+!$SYSTEM_1C_FONT_COLOR ?= "#050505"
+!$SYSTEM_1C_BG_COLOR ?= "#fae764"
+!$SYSTEM_1C_BORDER_COLOR ?= "#EDD53D"
+
+!$SYSTEM_1C_BOUNDARY_COLOR ?= $BOUNDARY_COLOR
+!$SYSTEM_1C_BOUNDARY_BG_COLOR ?= $BOUNDARY_BG_COLOR
+!$SYSTEM_1C_BOUNDARY_BORDER_STYLE ?= $BOUNDARY_BORDER_STYLE
+
+!$SYSTEM_1C_SECONDARY_FONT_COLOR ?= "#050505"
+!$SYSTEM_1C_SECONDARY_BG_COLOR ?= "#e0cd48"
+!$SYSTEM_1C_SECONDARY_BORDER_COLOR ?= "#EDD53D"
+
+!$SYSTEM_1C_SECONDARY_BOUNDARY_COLOR ?= $BOUNDARY_COLOR
+!$SYSTEM_1C_SECONDARY_BOUNDARY_BG_COLOR ?= $BOUNDARY_BG_COLOR
+!$SYSTEM_1C_SECONDARY_BOUNDARY_BORDER_STYLE ?= $BOUNDARY_BORDER_STYLE
+
+!$SYSTEM_ESB_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$SYSTEM_ESB_BG_COLOR ?= "#402294"
+!$SYSTEM_ESB_BORDER_COLOR ?= "#3C7FC0"
+
+!$SYSTEM_SAP_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$SYSTEM_SAP_BG_COLOR ?= "#34756A"
+!$SYSTEM_SAP_BORDER_COLOR ?= "#3C7FC0"
+
+!$FILE_SYSTEM_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$FILE_SYSTEM_BG_COLOR ?= "#8A8A8A"
+!$FILE_SYSTEM_BORDER_COLOR ?= "#808080"
+
+!$EXTERNAL_SYSTEM_FONT_COLOR ?= $ELEMENT_FONT_COLOR
+!$EXTERNAL_SYSTEM_BG_COLOR ?= "#999999"
+!$EXTERNAL_SYSTEM_BORDER_COLOR ?= "#8A8A8A"
+
+!$ENTERPRISE_BOUNDARY_COLOR ?= $BOUNDARY_COLOR
+!$ENTERPRISE_BOUNDARY_BG_COLOR ?= $BOUNDARY_BG_COLOR
+!$ENTERPRISE_BOUNDARY_BORDER_STYLE ?= $BOUNDARY_BORDER_STYLE
+
+' Styling
+' ##################################
+
+UpdateElementStyle("person", $PERSON_BG_COLOR, $PERSON_FONT_COLOR, $PERSON_BORDER_COLOR)
+UpdateElementStyle("external_person", $EXTERNAL_PERSON_BG_COLOR, $EXTERNAL_PERSON_FONT_COLOR, $EXTERNAL_PERSON_BORDER_COLOR)
+UpdateElementStyle("system", $SYSTEM_BG_COLOR, $SYSTEM_FONT_COLOR, $SYSTEM_BORDER_COLOR)
+UpdateElementStyle("system_1C", $SYSTEM_1C_BG_COLOR, $SYSTEM_1C_FONT_COLOR, $SYSTEM_1C_BORDER_COLOR)
+UpdateElementStyle("system_1C_secondary", $SYSTEM_1C_SECONDARY_BG_COLOR, $SYSTEM_1C_SECONDARY_FONT_COLOR, $SYSTEM_1C_SECONDARY_BORDER_COLOR)
+UpdateElementStyle("system_ESB", $SYSTEM_ESB_BG_COLOR, $SYSTEM_ESB_FONT_COLOR, $SYSTEM_ESB_BORDER_COLOR)
+UpdateElementStyle("system_SAP", $SYSTEM_SAP_BG_COLOR, $SYSTEM_SAP_FONT_COLOR, $SYSTEM_SAP_BORDER_COLOR)
+UpdateElementStyle("file_system", $FILE_SYSTEM_BG_COLOR, $FILE_SYSTEM_FONT_COLOR, $FILE_SYSTEM_BORDER_COLOR)
+UpdateElementStyle("external_system", $EXTERNAL_SYSTEM_BG_COLOR, $EXTERNAL_SYSTEM_FONT_COLOR, $EXTERNAL_SYSTEM_BORDER_COLOR)
+
+UpdateBoundaryStyle("system", $bgColor=$SYSTEM_BOUNDARY_BG_COLOR, $fontColor=$SYSTEM_BOUNDARY_COLOR, $borderColor=$SYSTEM_BOUNDARY_COLOR, $type="System")
+UpdateBoundaryStyle("system_1C", $bgColor=$SYSTEM_1C_BOUNDARY_BG_COLOR, $fontColor=$SYSTEM_1C_BOUNDARY_COLOR, $borderColor=$SYSTEM_1C_BOUNDARY_COLOR, $type="System_1C")
+UpdateBoundaryStyle("system_1C_secondary", $bgColor=$SYSTEM_1C_SECONDARY_BOUNDARY_BG_COLOR, $fontColor=$SYSTEM_1C_SECONDARY_BOUNDARY_COLOR, $borderColor=$SYSTEM_1C_SECONDARY_BOUNDARY_COLOR, $type="system_1C_secondary")
+UpdateBoundaryStyle("enterprise", $bgColor=$ENTERPRISE_BOUNDARY_BG_COLOR, $fontColor=$ENTERPRISE_BOUNDARY_COLOR, $borderColor=$ENTERPRISE_BOUNDARY_COLOR, $type="Enterprise")
+
+' shortcuts with default colors
+!unquoted procedure AddPersonTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("person", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddExternalPersonTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("external_person", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddSystemTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("system", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddSystem1CTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("system_1C", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!procedure AddSystem1CSecondaryTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("system_1C_secondary", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddSystemESBTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("system_ESB", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddSystemSAPTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("system_SAP", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddFileSystemTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("file_system", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+!unquoted procedure AddExternalSystemTag($tagStereo, $bgColor="", $fontColor="", $borderColor="", $shadowing="", $shape="", $sprite="", $legendText="", $legendSprite="", $type="", $borderStyle="", $borderThickness="")
+  $addElementTagInclReuse("external_system", $tagStereo, $bgColor, $fontColor, $borderColor, $shadowing, $shape, $sprite, $type, $legendText, $legendSprite, $borderStyle, $borderThickness)
+!endprocedure
+
+!unquoted procedure UpdateEnterpriseBoundaryStyle($bgColor=$ENTERPRISE_BOUNDARY_BG_COLOR, $fontColor=$ENTERPRISE_BOUNDARY_COLOR, $borderColor=$ENTERPRISE_BOUNDARY_COLOR, $shadowing="", $shape="", $type="Enterprise", $legendText="", $borderStyle="", $borderThickness="", $sprite="", $legendSprite="")
+  UpdateBoundaryStyle("enterprise", $bgColor, $fontColor, $borderColor, $shadowing, $shape, $type, $legendText, $borderStyle, $borderThickness, $sprite, $legendSprite)
+!endprocedure
+!unquoted procedure UpdateSystemBoundaryStyle($bgColor=$SYSTEM_BOUNDARY_BG_COLOR, $fontColor=$SYSTEM_BOUNDARY_COLOR, $borderColor=$SYSTEM_BOUNDARY_COLOR, $shadowing="", $shape="", $type="System", $legendText="", $borderStyle="", $borderThickness="", $sprite="", $legendSprite="")
+  UpdateBoundaryStyle("system", $bgColor, $fontColor, $borderColor, $shadowing, $shape, $type, $legendText, $borderStyle, $borderThickness, $sprite, $legendSprite)
+!endprocedure
+!unquoted procedure UpdateSystem1CBoundaryStyle($bgColor=$SYSTEM_1C_BOUNDARY_BG_COLOR, $fontColor=$SYSTEM_1C_BOUNDARY_COLOR, $borderColor=$SYSTEM_1C_BOUNDARY_COLOR, $shadowing="", $shape="", $type="System1C", $legendText="", $borderStyle="", $borderThickness="", $sprite="", $legendSprite="")
+  UpdateBoundaryStyle("system_1C", $bgColor, $fontColor, $borderColor, $shadowing, $shape, $type, $legendText, $borderStyle, $borderThickness, $sprite, $legendSprite)
+!endprocedure
+!procedure UpdateSystem1CSecondaryBoundaryStyle($bgColor=$SYSTEM_1C_SECONDARY_BG_COLOR, $fontColor=$SYSTEM_1C_SECONDARY_BOUNDARY_COLOR, $borderColor=$SYSTEM_SECONDARY_1C_BOUNDARY_COLOR, $shadowing="", $shape="", $type="System1CSecondary", $legendText="", $borderStyle="", $borderThickness="", $sprite="", $legendSprite="")
+  UpdateBoundaryStyle("system_1C_secondary", $bgColor, $fontColor, $borderColor, $shadowing, $shape, $type, $legendText, $borderStyle, $borderThickness, $sprite, $legendSprite)
+!endprocedure
+
+' Sprites
+' ##################################
+
+sprite $schedule [16x16/16z] ROk5aKHH0CAUOR__We-pzOo62UC3HyvrHN-gO4zqogzoDJ7bdm5Plnzrw4NugQ2I1jutRp16fglD0FF7JtL-W_NJpnl73Nbtrf5Ri8DUhGvmLQvs2CzQXwd-03knCJxm1G
+
+sprite $fileSystem [16x16/16z] LSg72G0n40D1NP3k-w_udOsNEB0S9NP4B_ZQGc8B4EpaUXtTvZtqZWr6q13BOFPeqq2oIjVCefEgPeymK8vC0Q0aPokPzM4cCRDn6wngQjorTVFj1m
+
+sprite $user [16x16/16z] dSU53OHG50J0RxlFS_rNUsv0b8bEEqhFzFhT1LJxlJ0cu_VBMWlrkm6W_SwdtmT8Z6-nUcjTz5DWZGar_vnqk_TpKjpkZTVlrMVlF-46
+
+sprite $esb [16x16/16z] PKi70aKn12iY-FF-ftrxDnra_Hyem2O0jV8qQJ9Tl7VUsYGOTmvHCEjrvHvP3nwuSIAhwkHmm4_kHX4U7CYPpusagHhX4JutID_IUsD6noCult-74G
+
+' Layout
+' ##################################
+
+SetDefaultLegendEntries("person\nsystem\nsystem_1C\nsystem_1C_secondary\nESB\nsystem_SAP\nexternal_person\nexternal_system\nenterprise_boundary\nsystem_boundary\nboundary")
+
+!procedure LAYOUT_WITH_LEGEND($header, $showsystem=0, $showsystem1c=0, $showesb=0, $showsystemsap=0, $showexternalsystem=0, $showfilesystem=0)
+hide stereotype
+legend right
+  |<color:$LEGEND_TITLE_COLOR>**$header**</color> |
+!if $showsystem==1
+  |<$SYSTEM_BG_COLOR><color:$SYSTEM_FONT_COLOR> Система</color>|
+!endif
+!if $showsystem1c==1
+  |<$SYSTEM_1C_BG_COLOR><color:$SYSTEM_1C_FONT_COLOR> Система 1С</color>|
+!endif
+!if $showesb==1
+  |<$SYSTEM_ESB_BG_COLOR><color:$SYSTEM_ESB_FONT_COLOR> Шина данных</color>|
+!endif
+!if $showsystemsap==1
+  |<$SYSTEM_SAP_BG_COLOR><color:$SYSTEM_SAP_FONT_COLOR> Система SAP</color>|
+!endif
+!if $showexternalsystem==1
+  |<$EXTERNAL_SYSTEM_BG_COLOR><color:$EXTERNAL_SYSTEM_FONT_COLOR> Внешняя система</color>|
+!endif
+!if $showfilesystem==1
+  |<$FILE_SYSTEM_BG_COLOR><color:$FILE_SYSTEM_FONT_COLOR> Файловое хранилище</color>|
+!endif
+endlegend
+!endprocedure
+
+!global $defaultPersonSprite = "person"
+!$dummy = $restoreEmpty("person", "sprite", $defaultPersonSprite, %true())
+UpdateElementStyle("person")
+' workaround of plantuml.jar bug - person overwrites external_person setting
+!$dummy = $restoreEmpty("external_person", "sprite", $defaultPersonSprite, %true())
+UpdateElementStyle("external_person")
+!global $portraitPerson = "false"
+
+!procedure $clearPersonRestore()
+  !$dummy = $clearRestore("person", "sprite")
+  !$dummy = $clearRestore("person", "legendSprite")
+  %set_variable_value("$" + "person" + "ElementTagSprite", "")
+  UpdateElementStyle("person")
+  ' workaround of plantuml.jar bug - person overwrites external_person setting
+  !$dummy = $clearRestore("external_person", "sprite")
+  !$dummy = $clearRestore("external_person", "legendSprite")
+  %set_variable_value("$" + "external_person" + "ElementTagSprite", "")
+  UpdateElementStyle("external_person")
+!endprocedure
+
+!procedure HIDE_PERSON_SPRITE()
+  !$defaultPersonSprite = ""
+  !$portraitPerson = "false"
+  $clearPersonRestore()
+!endprocedure
+
+!unquoted procedure SHOW_PERSON_SPRITE($sprite="")
+  !if ($sprite == "")
+    !$defaultPersonSprite = "person"
+  !else
+    !$defaultPersonSprite = $sprite
+  !endif
+  !$dummy = $restoreEmpty("person", "sprite", $defaultPersonSprite, %true())
+  UpdateElementStyle("person")
+  ' workaround of plantuml.jar bug - person overwrites external_person setting
+  !$dummy = $restoreEmpty("external_person", "sprite", $defaultPersonSprite, %true())
+  UpdateElementStyle("external_person")
+  !$portraitPerson = "false"
+!endprocedure
+
+!unquoted procedure SHOW_PERSON_PORTRAIT()
+  !$defaultPersonSprite = ""
+  !$portraitPerson = "portrait"
+  $clearPersonRestore()
+!endprocedure
+
+!unquoted procedure SHOW_PERSON_OUTLINE()
+  !$defaultPersonSprite = ""
+  !$portraitPerson = "outline"
+  $clearPersonRestore()
+!endprocedure
+
+' Elements
+' ##################################
+
+!function $getPerson($label, $type, $descr, $sprite)
+  !if ($sprite == "") && ($defaultPersonSprite != "")
+    !$sprite = $defaultPersonSprite
+  !endif
+  !return $getElementBase($label, $type, $descr, $sprite)
+!endfunction
+
+!unquoted procedure Person($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+!$sprite=$toElementArg($sprite, $tags, "ElementTagSprite", "person")
+' $type reuses $techn definition of $tags
+!$type=$toElementArg($type, $tags, "ElementTagTechn", "person")
+!if ($portraitPerson == "portrait") && ($sprite == "")
+actor "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("person", $tags) as $alias $getLink($link)
+!elseif ($portraitPerson == "outline") && ($sprite == "")
+person "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("person", $tags) as $alias $getLink($link)
+!else
+rectangle "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("person", $tags) as $alias $getLink($link)
+!endif
+!endprocedure
+
+!unquoted procedure Person_Ext($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+!$sprite=$toElementArg($sprite, $tags, "ElementTagSprite", "external_person")
+' $type reuses $techn definition of $tags
+!$type=$toElementArg($type, $tags, "ElementTagTechn", "external_person")
+!if ($portraitPerson == "portrait") && ($sprite == "")
+actor "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("external_person", $tags) as $alias $getLink($link)
+!elseif ($portraitPerson == "outline") && ($sprite == "")
+person "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("external_person", $tags) as $alias $getLink($link)
+!else
+rectangle "$getPerson($label, $type, $descr, $sprite)$getProps()" $toStereos("external_person", $tags) as $alias $getLink($link)
+!endif
+!endprocedure
+
+!unquoted procedure System($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure System1C($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "system_1C", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+!unquoted procedure System1CSecondary($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "system_1C_secondary", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+!unquoted procedure SystemESB($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "system_ESB", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+!unquoted procedure SystemSAP($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "system_SAP", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+!unquoted procedure FileSystem($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape, "file_system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure SystemDb($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+  ' $type reuses $techn definition of $tags
+  $getElementLine("database", "system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure SystemQueue($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+  ' $type reuses $techn definition of $tags
+  $getElementLine("queue", "system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure System_Ext($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="", $baseShape="rectangle")
+  ' $type reuses $techn definition of $tags
+  $getElementLine($baseShape , "external_system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure SystemDb_Ext($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+  ' $type reuses $techn definition of $tags
+  $getElementLine("database", "external_system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure SystemQueue_Ext($alias, $label, $descr="", $sprite="", $tags="", $link="", $type="")
+  ' $type reuses $techn definition of $tags
+  $getElementLine("queue", "external_system", $alias, $label, $type, $descr, $sprite, $tags, $link)
+!endprocedure
+
+' Boundaries
+' ##################################
+
+!unquoted procedure Enterprise_Boundary($alias, $label, $tags="", $link="", $descr = "")
+  !if ($tags != "")
+    !$allTags = $tags + '+enterprise'
+  !else
+    !$allTags = 'enterprise'
+  !endif
+  ' $type defined via $tag style
+  Boundary($alias, $label, "", $allTags, $link, $descr)
+!endprocedure
+
+!unquoted procedure System_Boundary($alias, $label, $tags="", $link="", $descr = "")
+  !if ($tags != "")
+    !$allTags = $tags + '+system'
+  !else
+    !$allTags = 'system'
+  !endif
+  ' $type defined via $tag style
+  Boundary($alias, $label, "", $allTags, $link, $descr)
+!endprocedure
+
+' Rels
+' ##################################
+!unquoted procedure Rel_R_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel($right("-","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure BiRel_R_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel("<<..>>", $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure Rel_U_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel($up("-","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure
+
+!unquoted procedure BiRel_U_Dashed($from, $to, $label, $techn="", $descr="", $sprite="", $tags="", $link="")
+$getRel($up("<<..","..>>"), $from, $to, $label, $techn, $descr, $sprite, $tags, $link)
+!endprocedure
